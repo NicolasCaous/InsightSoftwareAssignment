@@ -1,14 +1,17 @@
 import * as http from "http";
+import { Server } from "socket.io";
 
-const host = "localhost";
-const port = 8000;
-
-const requestListener = function (req: any, res: any) {
+const PORT = 8081;
+const server = http.createServer((req, res) => {
   res.writeHead(200);
-  res.end("My first server!");
-};
+  res.end(`socket.io server at port ${PORT}`);
+});
 
-const server = http.createServer(requestListener);
-server.listen(port, host, () => {
-  console.log(`Server is running on http://${host}:${port}`);
+const io = new Server(server, { cors: { origin: true } });
+io.on("connection", (socket) => {
+  console.log("a user connected");
+});
+
+server.listen(PORT, () => {
+  console.log(`starting server on *:${PORT}`);
 });

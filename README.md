@@ -1,5 +1,7 @@
 # Running
 
+TL;DR: `yarn install && yarn run start`
+
 After installing the dependencies running `yarn install` (or `npm i`), just run `yarn run start` (or `npm run start`).
 
 # Development journey
