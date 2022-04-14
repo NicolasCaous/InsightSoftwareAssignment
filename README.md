@@ -1,3 +1,7 @@
+# Running
+
+After installing the dependencies running `yarn install` (or `npm i`), just run `yarn run start` (or `npm run start`).
+
 # Development journey
 
 At first, I wished to comply with the request of the assignment to use a tech stack that is close to what the team already uses. Therefore, my objective was to use dotnet core in the backend and vanilla javascript for the frontend.
