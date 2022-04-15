@@ -23,3 +23,9 @@ In the end, the tech stack being used is the following:
 - HTML, CSS and vanilla JS for the FE;
 - Typescript for the BE;
 - socket.io for connecting the FE with the BE;
+
+# Possible improvements
+
+- Decouple networking from game logic in the backend. Currently, there is no need for that since the game logic is really simple. However, if this were a real project that would be expected to be continuously updated, decoupling is crucial to keep technical debt low.
+- There is no need to send the amount of data currently being sent between the client and the server. There is certainly room for improvement to better the performance of the network.
+- "Immediate Mode" layout is heavy on the CPU. Using a Retained mode should be a performance improvement.
