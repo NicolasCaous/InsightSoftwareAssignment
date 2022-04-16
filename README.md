@@ -6,6 +6,8 @@ After installing the dependencies running `yarn install` (or `npm i`), just run 
 
 This was developed and tested in a Windows environment. However, this should work in both Linux and Mac as well.
 
+![image](https://user-images.githubusercontent.com/24411365/163692993-0e178371-ba5d-45e9-8ae2-ebde3ccca47e.png)
+
 # Development journey
 
 At first, I wished to comply with the request of the assignment to use a tech stack that is close to what the team already uses. Therefore, my objective was to use dotnet core in the backend and vanilla javascript for the frontend.
