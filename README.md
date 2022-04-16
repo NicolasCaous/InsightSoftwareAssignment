@@ -4,6 +4,8 @@ TL;DR: `yarn install && yarn run start`
 
 After installing the dependencies running `yarn install` (or `npm i`), just run `yarn run start` (or `npm run start`).
 
+This was developed and tested in a Windows environment. However, this should work in both Linux and Mac as well.
+
 # Development journey
 
 At first, I wished to comply with the request of the assignment to use a tech stack that is close to what the team already uses. Therefore, my objective was to use dotnet core in the backend and vanilla javascript for the frontend.
@@ -34,3 +36,8 @@ In the end, the tech stack being used is the following:
 - The board state in the backend isn't really immutable. This is a limitation of javascript.
 - Better error messages and sending proper errors to clients.
 - Improved logging with a proper logger.
+
+# Known issues
+
+- The usage of `alert` instead of a proper UI modal for notifications blocks the javascript thread and causes messages coming from the server to be dropped or outdated. Too much of a hassle to fix.
+- You can exploit leaving a room as many times as you want to force you to begin the game in your turn. This can't be easily fixed and would require a feature to penalize players that quit often or right at the start of the game. However, a fix for this issue isn't really required for the purpose of this assignment.

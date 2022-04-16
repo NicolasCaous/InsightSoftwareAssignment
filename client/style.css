@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+}
+
+#server-status {
+  width: 100%;
+  position: fixed;
+  background-color: red;
+  color: white;
+}
+
+#lobby-list .new-game-container {
+  max-width: 400px;
+  margin: 0px auto 0px auto;
+  padding: 20vh 16px 0px 16px;
+}
+
+#lobby-list .new-game-container form {
+  display: grid;
+  grid-gap: 8px;
+}
+
+#lobby-list .new-game-submit {
+  height: 48px;
+}
+
+#lobby-list .lobby-list {
+  max-width: 800px;
+  background-color: lightgray;
+  padding: 16px;
+  margin: 16px auto 0px auto;
+}
+
+#error .error-container {
+  padding-top: 20vh;
+  margin: auto;
+  max-width: 600px;
+}
+
+#error .stacktrace {
+  padding-top: 32px;
+}
+
+#game .leave-button-container {
+  position: fixed;
+  margin-top: 20px;
+}
+
+#game .leave-button-container button {
+  width: 100px;
+  height: 50px;
+}
+
+#game .state-indicator {
+  max-width: 400px;
+  margin: 0px auto 0px auto;
+  padding-top: 20px;
+  height: 200px;
+}
+
+#game .state-text {
+  margin: 0;
+  width: fit-content;
+  line-height: 200px;
+}
+
+#game .state-text-container {
+  width: fit-content;
+  margin: auto;
+}
+
+#game .playing-as-container {
+  width: 92px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto 20px;
+  grid-template-rows: auto;
+}
+
+#game .playing-as-text {
+  width: 72px;
+}
+
+#game .playing-as {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+}
+
+#game .add-buttons {
+  display: grid;
+  margin: 32px auto 16px auto;
+  width: 434px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1tr;
+  column-gap: 16px;
+}
+
+#game .board-container {
+  display: grid;
+  margin: auto;
+  width: 450px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  row-gap: 16px;
+  justify-items: center;
+}
+
+#game .slot {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border-width: 1px;
+  border-style: dashed;
+}
+
+#game .pop-buttons {
+  display: grid;
+  margin: 16px auto 0px auto;
+  width: 434px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1tr;
+  column-gap: 16px;
+}

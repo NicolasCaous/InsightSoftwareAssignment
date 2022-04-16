@@ -31,6 +31,9 @@ export class BoardPopOut implements Board {
   }
 
   applyMove(move: Move, turn: "RED_TURN" | "YELLOW_TURN"): Board {
+    if (move.column < 0 || move.column >= this.COLUMNS)
+      return new BoardPopOut(true); // This move is not allowed
+
     const columnSize = this._getSizeOfColumn(this.slots[move.column]);
 
     if (columnSize === 0 && move.__type === "MovePopOut")

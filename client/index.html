@@ -1,26 +1,157 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
-    <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
+    <title>Connect Four</title>
+    <link href="style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+    <template id="lobby-list-template">
+      <div class="new-game-container">
+        <form>
+          <h1>NEW GAME</h1>
+          <label for="new-game-name">Name: </label>
+          <input
+            class="new-game-name"
+            id="new-game-name"
+            type="text"
+            required
+            minlength="3"
+            maxlength="127"
+          />
+          <div>
+            <span>Variant: </span>
+            <input
+              name="new-game-variant"
+              class="new-game-variant-standard"
+              type="radio"
+              value="Standard"
+              checked
+              required
+            />
+            <label for="new-game-variant-standard">Standard</label>
+            <input
+              name="new-game-variant"
+              class="new-game-variant-pop-out"
+              type="radio"
+              value="PopOut"
+              required
+            />
+            <label for="new-game-variant-pop-out">PopOut</label>
+          </div>
+          <div>
+            <span>Play as: </span>
+            <input
+              name="new-game-color"
+              class="new-game-color-red"
+              type="radio"
+              value="RED"
+              checked
+              required
+            />
+            <label for="new-game-color-red">RED</label>
+            <input
+              name="new-game-color"
+              class="new-game-color-yellow"
+              type="radio"
+              value="YELLOW"
+              required
+            />
+            <label for="new-game-color-yellow">YELLOW</label>
+          </div>
+          <button type="submit" class="new-game-submit">Create</button>
+        </form>
+      </div>
+      <div class="lobby-list"></div>
+    </template>
+    <template id="game-template">
+      <div class="leave-button-container">
+        <button type="button">← Leave</button>
+      </div>
+      <div class="state-indicator">
+        <div class="state-text-container">
+          <h3 class="state-text"></h3>
+        </div>
+      </div>
+      <div class="playing-as-container">
+        <div class="playing-as-text">Playing as:</div>
+        <div class="playing-as"></div>
+      </div>
+      <div class="add-buttons">
+        <button type="button" class="add-pop-button add-0">Add Slot</button>
+        <button type="button" class="add-pop-button add-1">Add Slot</button>
+        <button type="button" class="add-pop-button add-2">Add Slot</button>
+        <button type="button" class="add-pop-button add-3">Add Slot</button>
+        <button type="button" class="add-pop-button add-4">Add Slot</button>
+        <button type="button" class="add-pop-button add-5">Add Slot</button>
+        <button type="button" class="add-pop-button add-6">Add Slot</button>
+      </div>
+      <div class="board-container">
+        <div class="slot s0-5"></div>
+        <div class="slot s1-5"></div>
+        <div class="slot s2-5"></div>
+        <div class="slot s3-5"></div>
+        <div class="slot s4-5"></div>
+        <div class="slot s5-5"></div>
+        <div class="slot s6-5"></div>
+        <div class="slot s0-4"></div>
+        <div class="slot s1-4"></div>
+        <div class="slot s2-4"></div>
+        <div class="slot s3-4"></div>
+        <div class="slot s4-4"></div>
+        <div class="slot s5-4"></div>
+        <div class="slot s6-4"></div>
+        <div class="slot s0-3"></div>
+        <div class="slot s1-3"></div>
+        <div class="slot s2-3"></div>
+        <div class="slot s3-3"></div>
+        <div class="slot s4-3"></div>
+        <div class="slot s5-3"></div>
+        <div class="slot s6-3"></div>
+        <div class="slot s0-2"></div>
+        <div class="slot s1-2"></div>
+        <div class="slot s2-2"></div>
+        <div class="slot s3-2"></div>
+        <div class="slot s4-2"></div>
+        <div class="slot s5-2"></div>
+        <div class="slot s6-2"></div>
+        <div class="slot s0-1"></div>
+        <div class="slot s1-1"></div>
+        <div class="slot s2-1"></div>
+        <div class="slot s3-1"></div>
+        <div class="slot s4-1"></div>
+        <div class="slot s5-1"></div>
+        <div class="slot s6-1"></div>
+        <div class="slot s0-0"></div>
+        <div class="slot s1-0"></div>
+        <div class="slot s2-0"></div>
+        <div class="slot s3-0"></div>
+        <div class="slot s4-0"></div>
+        <div class="slot s5-0"></div>
+        <div class="slot s6-0"></div>
+      </div>
+      <div class="pop-buttons">
+        <button type="button" class="add-pop-button pop-0">Pop Slot</button>
+        <button type="button" class="add-pop-button pop-1">Pop Slot</button>
+        <button type="button" class="add-pop-button pop-2">Pop Slot</button>
+        <button type="button" class="add-pop-button pop-3">Pop Slot</button>
+        <button type="button" class="add-pop-button pop-4">Pop Slot</button>
+        <button type="button" class="add-pop-button pop-5">Pop Slot</button>
+        <button type="button" class="add-pop-button pop-6">Pop Slot</button>
+      </div>
+    </template>
+    <template id="error-template">
+      <div class="error-container">
+        <div class="message"></div>
+        <div class="stacktrace"></div>
+      </div>
+    </template>
+    <div id="server-status">STATUS: Disconnected - Latency: N/A</div>
+    <div id="lobby-list"></div>
+    <div id="game"></div>
+    <div id="error"></div>
     <script src="http://localhost:8081/socket.io/socket.io.js"></script>
+    <script src="renderer.js"></script>
     <script src="index.js"></script>
   </body>
 </html>

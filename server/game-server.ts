@@ -12,7 +12,6 @@ import { MoveAdd, MovePopOut } from "./move";
 export class GameServer {
   private readonly MAX_CONNECTIONS: number = 10;
   private readonly _connections: { [key: string]: Socket } = {};
-
   private readonly _lobbies: { [key: string]: Lobby } = {};
 
   constructor(server: Server, maxConnections?: number) {
@@ -35,6 +34,9 @@ export class GameServer {
     console.log(`New connection: ${socket.id}`);
     this._connections[socket.id] = socket;
 
+    socket.on("ping", (cb) => {
+      if (typeof cb === "function") cb();
+    });
     socket.on("disconnect", (reason) => this.onDisconnect(socket, reason));
     socket.on("message", (msg) => this.onMessage(socket, msg));
   }
@@ -46,6 +48,7 @@ export class GameServer {
     if (socket.id in this._lobbies) delete this._lobbies[socket.id];
 
     delete this._connections[socket.id];
+    socket.broadcast.emit("UpdateLobbyList");
   }
 
   onMessage(socket: Socket, msg: unknown) {
@@ -79,6 +82,7 @@ export class GameServer {
             msg.name,
             msg.variant
           );
+
           socket.broadcast.emit("UpdateLobbyList");
         } else {
           console.error('Message is not a valid "CreateLobby": ', msg);
@@ -109,6 +113,7 @@ export class GameServer {
           }
 
           this._lobbies[msg.id].opponentJoin(socket);
+          socket.broadcast.emit("UpdateLobbyList");
         } else {
           console.error('Message is not a valid "JoinLobby": ', msg);
           socket.emit(
@@ -132,6 +137,8 @@ export class GameServer {
           // TODO: Differentiate between loss of connection and lobby leave
           this._lobbies[msg.id].connectionLost(socket.id);
           if (socket.id in this._lobbies) delete this._lobbies[socket.id];
+          socket.broadcast.emit("UpdateLobbyList");
+          socket.emit("LeaveLobby");
         } else {
           console.error('Message is not a valid "LeaveLobby": ', msg);
           socket.emit(
@@ -150,6 +157,7 @@ export class GameServer {
               id,
               name: this._lobbies[id].name,
               variant: this._lobbies[id].variant,
+              state: this._lobbies[id].getState(),
             });
           }
 
@@ -188,6 +196,7 @@ export class GameServer {
               );
               break;
           }
+          socket.broadcast.emit("UpdateLobbyList");
         } else {
           console.error('Message is not a valid "MakeMove": ', msg);
           socket.emit(

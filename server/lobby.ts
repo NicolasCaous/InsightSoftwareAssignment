@@ -52,16 +52,15 @@ export class Lobby {
   }
 
   private _update(to: Socket, msg?: string) {
-    to.emit(
-      "GameUpdate",
-      {
-        state: this.state,
-        board: this.board.slots,
-        boardType: this.board.__type,
-        winner: this.board.winner,
-      },
-      msg
-    );
+    to.emit("GameUpdate", {
+      state: this.state,
+      board: this.board.slots,
+      boardType: this.board.__type,
+      winner: this.board.winner,
+      hostID: this.host.id,
+      redPlayerID: this.redPlayer?.id,
+      yellowPlayerID: this.yellowPlayer?.id,
+    });
   }
 
   public connectionLost(by: string) {
@@ -84,7 +83,7 @@ export class Lobby {
       if (this.yellowPlayer?.id === by) this.yellowPlayer = undefined;
       this.opponent = undefined;
 
-      this._update(this.host, "The opponent connection was lost");
+      this._update(this.host);
       return;
     }
   }
@@ -132,6 +131,10 @@ export class Lobby {
     this._update(this.opponent!);
   }
 
+  public getState() {
+    return this.state;
+  }
+
   public opponentJoin(opponent: Socket) {
     if (this.state !== LobbyState.WAITING_FOR_OPPONENT) {
       opponent.emit("ErrorLobbyFull", "Lobby is full");
@@ -151,7 +154,7 @@ export class Lobby {
         Math.floor(Math.random() * 2)
       ];
 
-    this._update(this.host, "Opponent joined");
+    this._update(this.host);
     this._update(this.opponent);
   }
 }

@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
   res.end(`socket.io server at port ${PORT}`);
 });
 
-const io = new Server(server, { cors: { origin: true } });
+const io = new Server(server, { cors: { origin: true }, pingInterval: 500 });
 const gameServer = new GameServer(io);
 
 server.listen(PORT, () => {

@@ -31,7 +31,12 @@ export class BoardStandard implements Board {
   }
 
   public applyMove(move: Move, turn: "RED_TURN" | "YELLOW_TURN"): Board {
-    if (move.__type === "MovePopOut") return new BoardStandard(true); // This move is not allowed
+    if (
+      move.__type === "MovePopOut" ||
+      move.column < 0 ||
+      move.column >= this.COLUMNS
+    )
+      return new BoardStandard(true); // This move is not allowed
 
     const columnSize = this._getSizeOfColumn(this.slots[move.column]);
     if (columnSize === this.ROWS) return new BoardStandard(true); // Can't add to a full column
