@@ -178,7 +178,7 @@ export class GameServer {
             case "MoveAdd":
               this._lobbies[msg.id].handleMove(
                 socket.id,
-                new MoveAdd(msg.column, msg.row)
+                new MoveAdd(msg.column)
               );
               break;
             case "MovePopOut":

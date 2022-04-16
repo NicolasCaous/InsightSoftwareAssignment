@@ -117,6 +117,7 @@ export class Lobby {
     }
 
     this.board = future;
+    this.lastMove = this.state === LobbyState.RED_TURN ? "RED" : "YELLOW";
 
     if (this.board.winner !== undefined) {
       this.state = LobbyState.DONE;

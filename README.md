@@ -10,6 +10,8 @@ At first, I wished to comply with the request of the assignment to use a tech st
 
 The choice of vanilla javascript comes from the fact that the frontend doesn't have many sharing visual components and that another factor being examined in my solution is simplicity (which I assume that "the simpler, the better"). I don't see a net advantage in using a javascript library such as Angular or React for a small project in which visual elements are not prioritized. Therefore, vanilla javascript was chosen to prevent bloating the project with dependencies that it doesn't really need.
 
+To prioritize simplicity, I decided to implement the frontend as a kind of "Immediate Mode" layout. This reduces code complexity,but comes with a performance trade-off. However, since only a few "frame" updates per second are expected, this shouldn't be an issue.
+
 I also decided that the project would benefit from having a backend (instead of using a peer-2-peer technology such as WebRTC) because I intend to make the game a Server-Authoritative game to prevent cheating in the form of manipulating the byte stream between the client and the server or just creating a "cheating client" that would transmit invalid moves or game states. In this way, fairness is enforced and guaranteed by the server.
 
 My next challenge was now to decide what protocol would the client and the server use. I was limited by the protocols that the browser allows a client to use. Since "real-timeness" is an obvious requirement for the game, I choose to use WebSockets as the underlying protocol ("underlying" in the sense that even if I choose to use a more abstract library, it would have to use WebSockets under the hood).
@@ -26,6 +28,9 @@ In the end, the tech stack being used is the following:
 
 # Possible improvements
 
-- Decouple networking from game logic in the backend. Currently, there is no need for that since the game logic is really simple. However, if this were a real project that would be expected to be continuously updated, decoupling is crucial to keep technical debt low.
+- Decouple networking from game logic in the backend. Currently, there is no need for that since the game logic is really simple. However, if this was a real project that would be expected to be continuously updated, decoupling is crucial to keep technical debt low.
 - There is no need to send the amount of data currently being sent between the client and the server. There is certainly room for improvement to better the performance of the network.
-- "Immediate Mode" layout is heavy on the CPU. Using a Retained mode should be a performance improvement.
+- "Immediate Mode" layout is heavy on the CPU. Using a retained mode should be a performance improvement.
+- The board state in the backend isn't really immutable. This is a limitation of javascript.
+- Better error messages and sending proper errors to clients.
+- Improved logging with a proper logger.

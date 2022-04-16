@@ -8,7 +8,6 @@ type MakeMove =
       id: string;
       moveType: "MoveAdd";
       column: number;
-      row: number;
     }
   | {
       type: typeof MakeMoveMessageID;
@@ -37,11 +36,8 @@ const schema: JSONSchemaType<MakeMove> = {
         column: {
           type: "number",
         },
-        row: {
-          type: "number",
-        },
       },
-      required: ["type", "id", "moveType", "column", "row"],
+      required: ["type", "id", "moveType", "column"],
       additionalProperties: false,
     },
     {

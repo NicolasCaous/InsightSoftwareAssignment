@@ -6,5 +6,9 @@ export interface Board {
   readonly slots: ("R" | "Y" | "-")[][];
   readonly winner?: "RED" | "YELLOW" | "DRAW";
 
+  readonly COLUMNS: 7;
+  readonly ROWS: 6;
+  readonly WIN_STREAK: 4;
+
   applyMove(move: Move, turn: "RED_TURN" | "YELLOW_TURN"): Board;
 }
