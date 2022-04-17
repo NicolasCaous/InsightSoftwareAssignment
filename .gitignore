@@ -1,3 +1,8 @@
 node_modules
 dist
 yarn-error.log
+test-reports
+# stryker temp files
+.stryker-tmp
+stryker.log
+reports

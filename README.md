@@ -38,6 +38,9 @@ In the end, the tech stack being used is the following:
 - The board state in the backend isn't really immutable. This is a limitation of javascript.
 - Better error messages and sending proper errors to clients.
 - Improved logging with a proper logger.
+- Incorporate proper dependency injection.
+- Testing files other than `board-standard.ts` and `board-pop-out.ts`.
+- Many more tests. I'm currently testing only a subset of winning conditions. Just out of curiosity, I ran a mutation test on the project to see if only testing trivial winning conditions would give me a good score. The result is currently 25%. I thought to myself "Is adding more test cases overkill for a selection process assignment? Yes.". That is why I stopped here. You get the point... I know how to test stuff... I guess this is enough to evaluate my technical abilities.
 
 # Known issues
 

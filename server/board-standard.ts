@@ -30,19 +30,29 @@ export class BoardStandard implements Board {
     return this.ROWS;
   }
 
-  public applyMove(move: Move, turn: "RED_TURN" | "YELLOW_TURN"): Board {
-    if (
-      move.__type === "MovePopOut" ||
-      move.column < 0 ||
-      move.column >= this.COLUMNS
-    )
-      return new BoardStandard(true); // This move is not allowed
+  public applyMove(
+    move: Move,
+    turn: "RED_TURN" | "YELLOW_TURN",
+    dryrun: boolean = false
+  ): Board {
+    let newSlots;
 
-    const columnSize = this._getSizeOfColumn(this.slots[move.column]);
-    if (columnSize === this.ROWS) return new BoardStandard(true); // Can't add to a full column
+    if (dryrun) {
+      newSlots = this._cloneSlots();
+    } else {
+      if (
+        move.__type === "MovePopOut" ||
+        move.column < 0 ||
+        move.column >= this.COLUMNS
+      )
+        return new BoardStandard(true); // This move is not allowed
 
-    const newSlots = this._cloneSlots();
-    newSlots[move.column][columnSize] = turn === "RED_TURN" ? "R" : "Y";
+      const columnSize = this._getSizeOfColumn(this.slots[move.column]);
+      if (columnSize === this.ROWS) return new BoardStandard(true); // Can't add to a full column
+
+      newSlots = this._cloneSlots();
+      newSlots[move.column][columnSize] = turn === "RED_TURN" ? "R" : "Y";
+    }
 
     // Check for winners
     let redWin = false;

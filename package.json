@@ -8,9 +8,16 @@
     "socket.io": "^4.4.1"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "^5.6.1",
+    "@stryker-mutator/jest-runner": "^5.6.1",
+    "@stryker-mutator/typescript-checker": "^5.6.1",
+    "@types/jest": "^27.4.1",
     "@types/node": "^17.0.24",
     "http-server": "^14.1.0",
+    "jest": "^27.5.1",
     "npm-run-all": "^4.1.5",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
   "optionalDependencies": {
@@ -22,6 +29,8 @@
     "server": "node ./dist/index.js",
     "client": "http-server -a localhost -p 8080 -o / ./client",
     "run-server-client": "npm-run-all -p -r server client",
-    "start": "npm-run-all -s build run-server-client"
+    "start": "npm-run-all -s build run-server-client",
+    "test": "jest --coverage",
+    "mutation": "stryker run"
   }
 }

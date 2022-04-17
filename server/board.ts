@@ -10,5 +10,9 @@ export interface Board {
   readonly ROWS: 6;
   readonly WIN_STREAK: 4;
 
-  applyMove(move: Move, turn: "RED_TURN" | "YELLOW_TURN"): Board;
+  applyMove(
+    move: Move,
+    turn: "RED_TURN" | "YELLOW_TURN",
+    dryrun?: boolean
+  ): Board;
 }
