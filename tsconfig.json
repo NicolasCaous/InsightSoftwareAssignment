@@ -27,7 +27,7 @@
     "stripInternal": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "include": ["server/**/*.ts", "test/board.test.ts"],
+  "include": ["server/**/*.ts"],
   "exclude": ["node_modules", "client"],
   "compileOnSave": true
 }
