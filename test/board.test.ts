@@ -15,7 +15,7 @@ const generateBoard = (
 ): ("R" | "Y" | "-")[][] => {
   let ret;
   if (from) ret = from;
-  else ret = Array(columnCount).fill(Array(rowCount).fill("-"));
+  else ret = Array.from(Array(columnCount), () => Array(rowCount).fill("-"));
 
   let c = column;
   let r = row;

@@ -17,7 +17,9 @@ export class BoardPopOut implements Board {
     winner?: "RED" | "YELLOW" | "DRAW"
   ) {
     this.invalid = invalid ?? false;
-    this.slots = slots ?? Array(this.COLUMNS).fill(Array(this.ROWS).fill("-"));
+    this.slots =
+      slots ??
+      Array.from(Array(this.COLUMNS), () => Array(this.ROWS).fill("-"));
     this.winner = winner;
   }
 
